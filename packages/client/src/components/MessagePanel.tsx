@@ -832,7 +832,7 @@ export default function MessagePanel({ conversationId }: { conversationId: strin
                                 }
                               })()}
                               {(!m.type || m.type === "TEXT") && renderMessageContent(m.content, conv?.members || [])}
-                              {m.editedAt && <span style={{ fontSize: '11px', opacity: 0.6, marginLeft: '6px' }}>(đã chỉnh sửa)</span>}
+
                             </div>
 
                             {mine && (

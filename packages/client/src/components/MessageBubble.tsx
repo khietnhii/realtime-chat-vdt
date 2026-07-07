@@ -96,7 +96,7 @@ export default function MessageBubble({
                     }
                   })()}
                   {(!m.type || m.type === "TEXT") && renderMessageContent(m.content, convMembers)}
-                  {m.editedAt && <span style={{ fontSize: '11px', opacity: 0.6, marginLeft: '6px' }}>(đã chỉnh sửa)</span>}
+
                 </div>
 
                 {mine && (
