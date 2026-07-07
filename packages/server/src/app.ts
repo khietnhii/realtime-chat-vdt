@@ -21,5 +21,14 @@ export function createApp() {
   app.use("/api/conversations", messageRouter);
   app.use("/api/upload", uploadRouter);
 
+  // Phục vụ Frontend Static Files trong môi trường Production
+  if (process.env.NODE_ENV === "production") {
+    const clientDistPath = path.join(process.cwd(), "../client/dist");
+    app.use(express.static(clientDistPath));
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(clientDistPath, "index.html"));
+    });
+  }
+
   return app;
 }

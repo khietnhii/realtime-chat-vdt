@@ -7,6 +7,8 @@
     "dev:server": "npm run dev -w @chat/server",
     "dev:client": "npm run dev -w @chat/client",
     "dev": "npm run infra:up && concurrently -n server,client -c blue,magenta \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "npm run build -w @chat/client && npm run build -w @chat/server",
+    "start": "NODE_ENV=production npm run start -w @chat/server",
     "infra:up": "docker compose up -d",
     "infra:down": "docker compose down",
     "db:push": "npm run prisma:push -w @chat/server",
