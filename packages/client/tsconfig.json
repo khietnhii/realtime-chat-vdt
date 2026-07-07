@@ -13,7 +13,8 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
-    "paths": { "@chat/shared": ["../shared/src/index.ts"] }
+    "paths": { "@chat/shared": ["../shared/src/index.ts"] },
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src"]
 }
