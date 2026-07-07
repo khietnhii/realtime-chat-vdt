@@ -115,23 +115,28 @@ export function registerHandlers(io: IO, socket: ChatSocket) {
   });
 
   socket.on("message:delete", async (payload, ack) => {
-    const parsed = deleteSchema.safeParse(payload);
-    if (!parsed.success) return ack({ ok: false, error: "Payload không hợp lệ" });
-    const { conversationId, messageId } = parsed.data;
+    try {
+      const parsed = deleteSchema.safeParse(payload);
+      if (!parsed.success) return ack({ ok: false, error: "Payload không hợp lệ" });
+      const { conversationId, messageId } = parsed.data;
 
-    let message = await prisma.message.findUnique({ where: { id: messageId } });
-    if (!message || message.senderId !== userId) {
-      return ack({ ok: false, error: "Không thể xoá tin nhắn này" });
+      let message = await prisma.message.findUnique({ where: { id: messageId } });
+      if (!message || message.senderId !== userId) {
+        return ack({ ok: false, error: "Không thể xoá tin nhắn này" });
+      }
+
+      message = await prisma.message.update({
+        where: { id: messageId },
+        data: { deletedAt: new Date() },
+      });
+
+      const dto = toMessageDTO(message);
+      ack({ ok: true, message: dto });
+      io.to(convRoom(conversationId)).emit("message:update", dto);
+    } catch (err: any) {
+      console.error("Delete error:", err);
+      ack({ ok: false, error: err.message || "Lỗi server" });
     }
-
-    message = await prisma.message.update({
-      where: { id: messageId },
-      data: { deletedAt: new Date() },
-    });
-
-    const dto = toMessageDTO(message);
-    ack({ ok: true, message: dto });
-    io.to(convRoom(conversationId)).emit("message:update", dto);
   });
 
   socket.on("message:read", async (payload) => {

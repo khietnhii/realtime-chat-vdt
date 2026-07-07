@@ -2,7 +2,7 @@ import { io, type Socket } from "socket.io-client";
 import { useStore } from "../store";
 import type { Message } from "../types";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL ?? "http://localhost:4000";
+const SERVER_URL = import.meta.env.PROD ? "" : (import.meta.env.VITE_SERVER_URL ?? "http://localhost:4000");
 const ACK_TIMEOUT = 6000;
 
 interface OutboxItem {
