@@ -1,21 +1,10 @@
 import { Router } from "express";
 import { requireAuth } from "../middlewares/auth.middleware";
 import multer from "multer";
-import path from "path";
-import { env } from "../lib/env";
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(process.cwd(), "uploads"));
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname));
-  },
-});
+import { cloudinaryStorage } from "../lib/cloudinary";
 
 const upload = multer({
-  storage: storage,
+  storage: cloudinaryStorage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
 });
 
@@ -26,7 +15,8 @@ r.post("/", requireAuth, upload.single("file"), (req, res) => {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
-  const url = `/uploads/${req.file.filename}`;
+  // multer-storage-cloudinary returns the Cloudinary URL in req.file.path
+  const url = req.file.path;
   const name = Buffer.from(req.file.originalname, 'latin1').toString('utf8');
   const size = req.file.size;
 

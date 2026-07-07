@@ -241,7 +241,7 @@ export async function updateProfile(req: Request, res: Response) {
 export async function uploadAvatar(req: Request, res: Response) {
   if (!req.file) return res.status(400).json({ error: "Không tìm thấy file" });
 
-  const avatarUrl = `/uploads/${req.file.filename}`;
+  const avatarUrl = req.file.path;
 
   const updatedUser = await prisma.user.update({
     where: { id: req.userId! },
