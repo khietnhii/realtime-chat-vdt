@@ -49,15 +49,16 @@ export default function MessageBubble({
   handleDeleteMessage,
   retryMessage
 }: MessageBubbleProps) {
-  const senderName = mine ? "Tôi" : (m.sender?.displayName || "Unknown");
-  const senderAvatar = m.sender?.avatarUrl || null;
+  const sender = convMembers.find(member => member.id === m.senderId);
+  const senderName = mine ? "Tôi" : (sender?.displayName || "Unknown");
+  const senderAvatar = sender?.avatarUrl || null;
 
   return (
-    <div className={mine ? "row sent" : "row recv"} style={{ opacity: m.status === 'ERROR' ? 0.8 : 1 }}>
+    <div className={mine ? "row sent" : "row recv"} style={{ opacity: m.status === 'failed' ? 0.8 : 1 }}>
       {!mine && <div className="gutter"><Avatar name={senderName} seed={m.senderId} url={senderAvatar} size={30} /></div>}
       <div className="stack">
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div className={m.status === 'ERROR' ? "bubble-wrap error" : "bubble-wrap"}>
+          <div className={m.status === 'failed' ? "bubble-wrap error" : "bubble-wrap"}>
             {m.deletedAt ? (
               <div className="bubble tooltip-wrap msg-deleted" style={{ fontStyle: 'italic', color: 'var(--muted)', background: mine ? 'rgba(0,0,0,0.05)' : 'var(--surface-2)' }}>
                 Tin nhắn đã bị thu hồi

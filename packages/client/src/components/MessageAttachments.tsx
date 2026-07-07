@@ -1,15 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useStore } from "../store";
-import { sendMessage, sendTyping, markRead, retryMessage, editMessage, deleteMessage } from "../lib/socket";
-import { api } from "../lib/api";
-import { timeHM, dateLabel, sameDay } from "../lib/format";
-import Avatar from "./Avatar";
-import StatusTicks from "./StatusTicks";
-import type { Message, ConversationMemberLite } from "../types";
-import EmojiPicker from "emoji-picker-react";
-import GroupInfoModal from "./GroupInfoModal";
-import CatchMeUpModal from "./CatchMeUpModal";
 
 const forceDownload = async (e: React.MouseEvent, url: string, filename: string) => {
   e.preventDefault();
@@ -31,7 +21,7 @@ const forceDownload = async (e: React.MouseEvent, url: string, filename: string)
   }
 };
 
-function FileAttachment({ fileData, mine }: { fileData: any, mine: boolean }) {
+export function FileAttachment({ fileData, mine }: { fileData: any, mine: boolean }) {
   const [downloaded, setDownloaded] = useState(false);
   return (
     <a
@@ -73,7 +63,7 @@ function FileAttachment({ fileData, mine }: { fileData: any, mine: boolean }) {
   );
 }
 
-function ImageAttachment({ url }: { url: string }) {
+export function ImageAttachment({ url }: { url: string }) {
   const [hover, setHover] = useState(false);
   const [lightbox, setLightbox] = useState(false);
 
@@ -141,7 +131,7 @@ function ImageAttachment({ url }: { url: string }) {
   );
 }
 
-function VideoAttachment({ url }: { url: string }) {
+export function VideoAttachment({ url }: { url: string }) {
   return (
     <div style={{ position: 'relative', display: 'inline-block', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(0,0,0,0.1)', maxWidth: '280px', backgroundColor: '#000' }}>
       <video src={url} controls style={{ display: 'block', width: '100%', maxHeight: '280px', objectFit: 'contain' }} />
@@ -149,7 +139,7 @@ function VideoAttachment({ url }: { url: string }) {
   );
 }
 
-function AudioAttachment({ url, mine }: { url: string, mine: boolean }) {
+export function AudioAttachment({ url, mine }: { url: string, mine: boolean }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
