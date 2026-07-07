@@ -26,7 +26,7 @@ r.post("/", requireAuth, upload.single("file"), (req, res) => {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
-  const url = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+  const url = `/uploads/${req.file.filename}`;
   const name = Buffer.from(req.file.originalname, 'latin1').toString('utf8');
   const size = req.file.size;
 
