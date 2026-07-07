@@ -19,7 +19,7 @@ export default function Avatar({
       style={{
         width: size,
         height: size,
-        background: url ? `url(${url.startsWith('http') ? url : `http://localhost:4000${url}`}) center/cover` : avatarColor(seed ?? name),
+        background: url ? `url(${url}) center/cover` : avatarColor(seed ?? name),
         fontSize: size * 0.4,
       }}
     >
