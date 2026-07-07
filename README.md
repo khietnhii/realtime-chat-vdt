@@ -1,4 +1,4 @@
-# 💬 [Viettel Digital Talent 2026] Pulse Chat - Realtime Messaging
+# 💬 [VDT 2026] Pulse Chat - Realtime Messaging
 
 Một ứng dụng trò chuyện trực tuyến (real-time chat) full-stack mạnh mẽ được phát triển cho mini project thuộc khuôn khổ chương trình Viettel Digital Talent 2026. Ứng dụng được thiết kế tối ưu hiệu suất, dễ dàng mở rộng ngang (scale out), và tích hợp Trí tuệ nhân tạo (AI) mang lại trải nghiệm người dùng hiện đại nhất.
 
@@ -24,12 +24,12 @@ Một ứng dụng trò chuyện trực tuyến (real-time chat) full-stack mạ
 
 ```mermaid
 graph TD
-    Client[Client (React + Zustand)]
-    REST[REST API (Express)]
-    WS[WebSocket (Socket.IO)]
-    Server[App Server (Node.js)]
-    DB[(PostgreSQL)]
-    Redis[(Redis)]
+    Client["Client (React + Zustand)"]
+    REST["REST API (Express)"]
+    WS["WebSocket (Socket.IO)"]
+    Server["App Server (Node.js)"]
+    DB[("PostgreSQL")]
+    Redis[("Redis")]
 
     Client -- API Calls --> REST
     Client -- Realtime Events --> WS
