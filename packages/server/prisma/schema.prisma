@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  displayName  String
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+
+  isVerified                Boolean   @default(false)
+  verificationCode          String?
+  verificationCodeExpiresAt DateTime?
+
+  memberships ConversationMember[]
+  messages    Message[]
+}
+
+model Conversation {
+  id        String   @id @default(uuid())
+  type      ConvType
+  name      String?
+  avatarUrl String?
+  createdBy String?
+  createdAt DateTime @default(now())
+
+  members  ConversationMember[]
+  messages Message[]
+}
+
+model ConversationMember {
+  conversationId    String
+  userId            String
+  role              MemberRole @default(MEMBER)
+  joinedAt          DateTime   @default(now())
+  lastReadMessageId String?
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([conversationId, userId])
+  @@index([userId])
+}
+
+model Message {
+  id             String    @id @default(uuid())
+  conversationId String
+  senderId       String
+  content        String
+  type           MsgType   @default(TEXT)
+  clientMsgId    String
+  createdAt      DateTime  @default(now())
+  editedAt       DateTime?
+  deletedAt      DateTime?
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@unique([conversationId, clientMsgId])
+  @@index([conversationId, createdAt])
+}
+
+enum ConvType {
+  DIRECT
+  GROUP
+}
+
+enum MemberRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum MsgType {
+  TEXT
+  IMAGE
+  VIDEO
+  AUDIO
+  FILE
+  SYSTEM
+}
