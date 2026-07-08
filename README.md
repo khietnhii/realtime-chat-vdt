@@ -55,7 +55,7 @@ graph TD
 - **ORM**: Prisma
 - **Real-time**: Socket.IO với Redis Adapter
 - **Xác thực (Auth)**: JSON Web Tokens (JWT) & bcryptjs
-- **Upload File**: Multer
+- **Upload File**: Cloudinary & Multer
 - **Validation**: Zod
 - **AI**: `@google/generative-ai`
 
@@ -116,6 +116,11 @@ npm install
   SMTP_HOST="smtp.gmail.com"
   SMTP_USER="your_email@gmail.com"
   SMTP_PASS="your_app_password"
+  
+  # Cấu hình Cloudinary (bắt buộc) để upload hình ảnh và file
+  CLOUDINARY_CLOUD_NAME="your_cloud_name"
+  CLOUDINARY_API_KEY="your_api_key"
+  CLOUDINARY_API_SECRET="your_api_secret"
   ```
 
 **4. Khởi chạy Hạ tầng (PostgreSQL & Redis):**
