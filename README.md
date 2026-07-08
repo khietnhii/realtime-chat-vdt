@@ -2,6 +2,10 @@
 
 Một ứng dụng trò chuyện trực tuyến (real-time chat) full-stack mạnh mẽ được phát triển cho mini project thuộc khuôn khổ chương trình Viettel Digital Talent 2026. Ứng dụng được thiết kế tối ưu hiệu suất, dễ dàng mở rộng ngang (scale out), và tích hợp Trí tuệ nhân tạo (AI) mang lại trải nghiệm người dùng hiện đại nhất.
 
+🌍 **Live Demo:** [https://realtime-chat-vdt.onrender.com/](https://realtime-chat-vdt.onrender.com/)
+
+*(Chú ý: Vì triển khai trên nền tảng Render Free Tier, máy chủ có thể mất 30-50s để khởi động nếu không có người truy cập trong một thời gian).*
+
 ## ✨ Các tính năng nổi bật
 
 ### ⚡ Cốt lõi Realtime & Tối ưu
@@ -164,6 +168,14 @@ npm run infra:down
 - `npm run infra:down`: Tắt các Docker container.
 - `npm run db:push`: Đẩy schema của Prisma lên database.
 - `npm run db:generate`: Tạo Prisma client.
+
+## 🚀 Triển khai (Deployment)
+
+Dự án này đã được cấu hình và triển khai thành công trên **Render**:
+- **Web Service (Node.js)**: Build lệnh `npm ci && npm run build` và Start lệnh `npm run start`.
+- **PostgreSQL**: Sử dụng dịch vụ Managed Database của Render.
+- **Redis**: Dùng Redis instance của Render (hoặc Upstash) hỗ trợ real-time scaling.
+- **Lưu trữ tĩnh**: Ảnh và tệp được quản lý bởi Cloudinary, đảm bảo file luôn tồn tại kể cả khi container Render khởi động lại.
 
 ---
 *Dự án thực hiện trong khuôn khổ Viettel Digital Talent 2026.*
