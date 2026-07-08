@@ -1,4 +1,8 @@
 import nodemailer from "nodemailer";
+import dns from "node:dns";
+
+// Khắc phục lỗi ENETUNREACH (IPv6) của Node 18+ trên Render
+dns.setDefaultResultOrder("ipv4first");
 
 const SMTP_HOST = process.env.SMTP_HOST || "smtp.gmail.com";
 const SMTP_PORT = parseInt(process.env.SMTP_PORT || "587");
