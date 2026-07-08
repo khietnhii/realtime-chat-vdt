@@ -14,6 +14,7 @@ export function createApp() {
 
   app.get("/api/health", (_req, res) => res.json({ ok: true }));
 
+  app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
   app.use("/api/auth", authRouter);
   app.use("/api/conversations", conversationRouter);
